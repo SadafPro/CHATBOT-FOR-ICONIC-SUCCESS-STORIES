@@ -1,0 +1,210 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/images/wall e.jpg'); /* Path to your background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    display: inline-block;
+    width: 1166px;
+    height:520px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    background-color: rgba(7, 7, 7, 0.4);
+    position: absolute; /* Add this for positioning the suggestion box */
+    overflow-y: auto;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 1166px;
+    height: 450px;
+    position: relative;
+    overflow-y: auto;
+    border-bottom: 2px solid #ccc;
+}
+
+.messages li {
+    margin-bottom: 10px;
+}
+
+.messages .text {
+    color: #0ef;
+    text-shadow: 0 0 15px #0ef;
+    font-size: 25px;
+    margin-top: 10px;
+    font-family: fantasy;
+    opacity: 0; /* Initially invisible */
+    animation: fadeIn 0.5s ease-in-out 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Apply animation to text-below class */
+.messages .text-below {
+    color: #0ef;
+    text-shadow: 0 0 15px #0ef;
+    font-size: 20px;
+    opacity: 0; /* Initially invisible */
+    animation: fadeIn 1s ease-in-out 1.5s forwards; /* Delayed animation */
+}
+
+/* Define the keyframes animation for rotation */
+@keyframes rotateIn {
+    from {
+        transform: rotateY(-90deg);
+    }
+    to {
+        transform: rotateY(0deg);
+    }
+}
+
+/* Style for the box container */
+.box {
+    position: relative;
+    display: inline-block;
+    font-style: oblique;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 0 15px #0ef;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    width: 180px;
+    height: 130px;
+    overflow: hidden;
+    transform-style: preserve-3d; /* Ensure 3D transformations */
+    transform: rotateY(-90deg); /* Start with the boxes facing away */
+    animation: rotateIn 1s forwards; /* Rotate animation */
+    animation-delay: 3s;
+    transition: transform 0.3s; /* Add transition for smooth animation */
+}
+
+/* Style for the image */
+.box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Style for the text */
+.box span {
+    position: absolute;
+    font-size: larger;
+    top: 45%; /* Position text vertically at the middle */
+    left: 50%; /* Position text horizontally at the middle */
+    transform: translate(-50%, -50%); /* Center text */
+    z-index: 1; /* Bring text to the front */
+    background-color: none; /* Background color for better readability */
+    padding: 5px 10px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Style for the box when hovered */
+.box:hover {
+    transform: translateY(-10px); /* Move box up slightly */
+    box-shadow: 0 0 20px #0ef; /* Add box shadow for a pop-up effect */
+}
+
+.user-message {
+    text-align: right;
+    color: #0ef;
+    text-shadow: 0 0 15px #0ef;
+    margin-right: 10px;
+}
+
+/* Style for bot messages */
+.bot-message {
+    text-align: left;
+    color: white;
+    margin-left: 10px;
+    margin-right: 95px;
+    text-shadow: 0 0 10px white;
+    justify-content: center;
+}
+
+.bot-message span, .bot-message p {
+    margin-left: 25px; /* Move the text to the right of the image */
+}
+
+.bot-image {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    border-radius: 50%; /* Make the image circular */
+    margin-right: 10px; /* Space between image and text */
+    vertical-align: middle; /* Align with text */
+}
+
+.bot-response {
+    display: flex;
+    align-items: center; /* Center image and text vertically */
+    margin-left: 10px; /* Adjust the margin to move the response away from the image */
+}
+
+/* Style for subtopics */
+.subtopic {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 30px /* Add margin between subtopics */
+}
+
+/* Style for paragraph list */
+.paragraph-list {
+    list-style-type: none;
+    padding-left: 40px; /* Indent paragraphs */
+}
+
+.paragraph {
+    margin-left: 25px; /* Adjust margin to move paragraph content to the right */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-indent: -10px; /* Adjust indentation to align with bullet points */
+}
+
+
+.input-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.input-container .user-label {
+    font-weight: bold; /* Display label as a block element */
+}
+
+.input-field {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+.send-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

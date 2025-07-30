@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot_styles.css') }}">
+    <title>Chatbot</title>
+</head>
+<body>
+    <div class="container">
+        <ul id="messages" class="messages">
+            <p><center class="text">Hello! I am ChatSHAH<br>I can tell you Iconic stories about Famous People</center></p>
+            <div class="col">
+                <center>
+                    <a href="page1.html" class="box">
+                        <img src="{{ url_for('static', filename='images/celebrities.jpg') }}" alt="Image 1">
+                        <span>CELEBRITIES </span>
+                    </a>
+                    <a href="page2.html" class="box" style="color:rgb(0, 0, 0);">
+                        <img src="{{ url_for('static', filename='images/ceo.jpg') }}" alt="Image 2">
+                        <span>BILLIONAIRES</span>
+                    </a>
+                    
+                    <a href="page3.html" class="box" style="color: rgb(246, 4, 4)" text-shadow= "0 0 15px #0ef;">
+                        <img src="{{ url_for('static', filename='images/sports.jpg') }}" alt="Image 3">
+                        <span>SPORTS</span>
+                    </a><br>
+                </center>
+            </div>
+            <p><center class="text-below">And you can read the stories just by clicking from above </center></p>
+        </ul>
+
+        <div class="input-container">
+            <input type="text" id="userInput" class="input-field" placeholder="Type your message...">
+            <button onclick="sendMessage()" class="send-button">Send</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/chatbot_script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot_styles.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Chatbot</title>
+    <style>
+        .copy-btn {
+            color: #007bff;
+            cursor: pointer;
+            margin-right: 5px; /* Adjust margin between copy button and text */
+            font-size: 24px;
+            vertical-align: middle;  /* Adjust color as needed */
+        }
+        .paste-btn {
+            color: #007bff;
+            cursor: pointer;
+            font-size: 24px;
+            vertical-align: middle;  /* Adjust color as needed */
+            background-color: transparent; /* Set background color to transparent */
+            border: none; /* Remove border */
+            outline: none; /* Remove outline */
+        }
+        .copied-message {
+            color: rgb(116, 114, 255); /* Color for the "Copied!" message */
+            margin-left: 5px;
+        }
+        .celeb-list {
+            color: #fff;
+            list-style: none; /* Remove bullet points */
+            padding: 0; /* Remove default padding */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .celeb-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px; /* Adjust spacing between items */
+            width: 100%; /* Ensure items take full width */
+        }
+        .celeb-info {
+            color:coral; 
+            font-weight: bold;/* Color for the content after hyphen */
+        }
+        .celeb-name {
+            font-weight: bold;
+            color: turquoise; /* Color for the name */
+            margin-right: 10px; /* Add spacing between name and content */
+            white-space: nowrap; /* Prevent name from breaking into multiple lines */
+            display: inline-block; /* Ensure all names align in the same line */
+        }
+        .celeb-name,
+        .celeb-info {
+            flex: 1; /* Ensure both columns take equal space */
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .input-field-container {
+            position: relative;
+            width: 100%;
+        }
+        .input-field {
+            padding-right: 50px; /* Space for the paste button */
+            width: 94%;
+        }
+        .paste-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            padding: 5px;
+        }
+        .container {
+            max-height: 80vh; /* Adjust the height of the container */
+            overflow-y: auto; /* Add scroll bar */
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Text content to be typed out
+        const textToType = "Hi! Great choice. People who in the top place for their look and their acting and their fan base, and its about the stories of some famous celebrities who stuggled in their early life to achieve the top place. Here a list of them, you can enjoy them just by copy and paste";
+
+        // Delay between typing each character (in milliseconds)
+        const typingSpeed = 20;
+
+        // Function to simulate typing effect for the given text
+        function typeWriter() {
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                document.getElementById("typewriter").textContent += textToType.charAt(i);
+                i++;
+                // Stop typing when the entire text is typed
+                if (i > textToType.length - 1) {
+                    clearInterval(typingInterval);
+                    // After typing is completed, display celebrity names one by one
+                    displayCelebrityNames();
+                }
+            }, typingSpeed);
+        }
+
+            // Display celebrity names one by one
+    function displayCelebrityNames(index = 0) {
+        const celebrities = [
+            "From a Conductor to Superstar - Rajnikant",
+            "A Weird Kid with a Stutter Who Became the Most Famous Actor in the World - Mr.Bean",
+            "World’s Biggest Boy Band - BTS",
+        ];
+
+        if (index < celebrities.length) {
+            const celebList = document.getElementById("celeb-list");
+            const [info, name] = celebrities[index].split(' - ');
+
+            const celebItem = document.createElement("li");
+            celebItem.className = "celeb-item";
+
+            const infoSpan = document.createElement("span");
+            infoSpan.className = "celeb-info";
+            infoSpan.textContent = info;
+
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "celeb-name";
+            nameSpan.textContent = name;
+
+            const copyButton = document.createElement("span");
+            copyButton.className = "material-icons copy-btn";
+            copyButton.textContent = "content_copy"; // Material Design icon for copy
+            copyButton.onclick = function(event) {
+                copyText(name, event.target);
+            };
+
+            celebItem.appendChild(infoSpan);
+            celebItem.appendChild(nameSpan);
+            celebItem.appendChild(copyButton);
+            
+            celebList.appendChild(celebItem);
+
+            // Scroll to the current name
+            celebItem.scrollIntoView({ behavior: "smooth", block: "end" });
+
+            // Increment index and call recursively with a delay
+            setTimeout(() => {
+                displayCelebrityNames(index + 1);
+            }, 300); // Adjust the delay between each name scroll (2000ms for example)
+        } else {
+            // After scrolling through all names, scroll down the entire page
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 200); // Adjust the delay as needed
+        }
+    }
+
+
+
+        // Start the typing effect when the page loads
+        window.onload = typeWriter;
+
+ 
+    const additionalTexts = [
+        "I hope you like this stories and you can read more stories like this just click name from above",
+        "You want to know more interesting stories of Billionaires just click Back arrow and you select them from boxes",
+        "If you have more questions, feel free to ask!",
+        "Remember, I'm here to help you with anything you need.",
+        "Don't hesitate to reach out if you need more information.",
+        "I'm always here to provide assistance. What's your next question?"
+    ];
+    let responseCount = 0;
+
+    function displayMessageWithTypingEffect(message, className) {
+        var ul = document.getElementById("messages");
+
+        function typeWriterEffect(text, element, callback) {
+            var index = 0;
+            function type() {
+                if (index < text.length) {
+                    element.append(text.charAt(index));
+                    index++;
+                    setTimeout(type, 15); // Adjust typing speed here
+                    scrollToBottom();
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function displaySection(index, sections, li, callback) {
+        if (index < sections.length) {
+            var subtopic = sections[index].subtopic;
+            var paragraphs = sections[index].paragraphs;
+    
+            var subtopicNode = document.createElement('div');
+            subtopicNode.className = 'subtopic';
+            subtopicNode.innerHTML = (index + 1) + ". " + subtopic; // Adding numbers to subtopics
+            li.appendChild(subtopicNode);
+    
+            var paragraphList = document.createElement('ul');
+            paragraphList.className = 'paragraph-list';
+            li.appendChild(paragraphList);
+    
+            var paragraphIndex = 0;
+    
+            function typeWriterEffectForParagraph(paragraph, paragraphNode, callback) {
+                var index = 0;
+                function type() {
+                    if (index < paragraph.length) {
+                        if (index === 0) {
+                            paragraphNode.innerHTML += "&#8226; "; // Adding bullet point at the beginning of the paragraph
+                        }
+                        paragraphNode.innerHTML += paragraph.charAt(index);
+                        index++;
+                        setTimeout(type, 15); // Adjust typing speed here
+                        scrollToBottom();
+                    } else {
+                        if (callback) {
+                            callback(); // Call the callback function after the paragraph has finished typing
+                        }
+                    }
+                }
+                type();
+            }
+    
+            function displayNextParagraph() {
+                if (paragraphIndex < paragraphs.length) {
+                    var paragraph = paragraphs[paragraphIndex];
+                    var paragraphNode = document.createElement('li');
+                    paragraphNode.className = 'paragraph';
+                    paragraphList.appendChild(paragraphNode);
+    
+                    typeWriterEffectForParagraph(paragraph, paragraphNode, function() {
+                        paragraphIndex++;
+                        displayNextParagraph(); // Call the next paragraph after the current one finishes typing
+                    });
+                } else {
+                    // Call the next section after all paragraphs have finished typing
+                    displaySection(index + 1, sections, li, callback);
+                }
+            }
+    
+            displayNextParagraph();
+        } else {
+            if (callback) {
+                callback(); // Call the callback function after the current section has finished typing
+            }
+        }
+    }
+    
+
+        var response;
+        try {
+            response = JSON.parse(message.replace("Bot: ", ""));
+        } catch (e) {
+            displayMessage(message, className);
+            return;
+        }
+
+        var sections = response.response;
+
+        // Create a new li element for the bot response
+        var li = document.createElement("li");
+        li.className = className;
+
+        // Append the bot image
+        var img = document.createElement('img');
+        img.src = 'static/images/wall-e-waving.gif'; // Adjust the path as needed
+        img.className = 'bot-image';
+        li.appendChild(img);
+
+        // Add line breaks after the image
+        li.appendChild(document.createElement('br'));
+        li.appendChild(document.createElement('br'));
+
+        // Append the li to the ul
+        ul.appendChild(li);
+
+        // Call displaySection to display the bot response content
+        displaySection(0, sections, li, function() {
+            // Wait for a few seconds before displaying the additional text
+            setTimeout(function() {
+                if (responseCount < additionalTexts.length) {
+                    // Create a new li element for the additional text
+                    var additionalLi = document.createElement("li");
+                    additionalLi.className = className;
+
+                    // Append the bot image to the additional text li
+                    var additionalImg = document.createElement('img');
+                    additionalImg.src = 'static/images/wall-e-waving.gif'; // Adjust the path as needed
+                    additionalImg.className = 'bot-image';
+                    additionalLi.appendChild(additionalImg);
+
+                    // Add line breaks after the image
+                    additionalLi.appendChild(document.createElement('br'));
+                    additionalLi.appendChild(document.createElement('br'));
+
+                    // Append the additional text
+                    var additionalTextNode = document.createElement('p');
+                    additionalTextNode.textContent = additionalTexts[responseCount];
+                    additionalTextNode.style.marginTop = "10px"; // Style the additional text
+                    additionalLi.appendChild(additionalTextNode);
+
+                    // Append the additional li to the ul
+                    ul.appendChild(additionalLi);
+
+                    // Scroll to bottom to show the additional text
+                    scrollToBottom();
+
+                    // Increment the response count for the next additional text
+                    responseCount++;
+                }
+            }, 2000); // 2000 milliseconds = 2 seconds delay
+        });
+    }
+
+    function scrollToBottom() {
+        var chatWindow = document.getElementById("messages");
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+        function sendMessage() {
+            var userInput = document.getElementById("userInput").value;
+
+            displayMessage("You: " + userInput, "user-message");
+
+            fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'user_input=' + encodeURIComponent(userInput)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var botMessage = JSON.stringify(data);
+                displayMessageWithTypingEffect(botMessage, "bot-message");
+                scrollToBottom();
+            })
+            .catch(error => console.error('Error:', error));
+
+            document.getElementById("userInput").value = "";
+        }
+
+        function displayMessage(message, className) {
+            var ul = document.getElementById("messages");
+            var li = document.createElement("li");
+            li.className = className; // Add the specified class
+
+            // Add message content
+            li.appendChild(document.createTextNode(message));
+            ul.appendChild(li);
+
+            // Scroll to bottom
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            var chatWindow = document.getElementById("messages");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function copyText(text, copyBtn) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            
+            // Display "Copied!" message next to the copy icon
+            var copiedMessage = document.createElement("span");
+            copiedMessage.textContent = "Copied!";
+            copiedMessage.className = "copied-message";
+            copyBtn.parentNode.appendChild(copiedMessage);
+
+            // Remove "Copied!" message after 1.5 seconds
+            setTimeout(function() {
+                copyBtn.parentNode.removeChild(copiedMessage);
+            }, 1500);
+        }
+    </script>
+
+    <div class="container">
+        <ul id="messages" class="messages">
+            <p id="typewriter" style="color:#fff; text-shadow: 0 0 15px #28f1ff;"></p>
+            <ul id="celeb-list" class="celeb-list"></ul>
+        </ul>
+    
+        <div class="input-container">
+            <div class="input-field-container">
+                <input type="text" id="userInput" class="input-field" placeholder="Type your message...">
+                <button class="material-icons paste-btn" onclick="pasteText(event)">content_paste</button>
+            </div>
+            <button onclick="sendMessage()" class="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to paste text into the input field
+        function pasteText(event) {
+            navigator.clipboard.readText().then(clipText => {
+                document.getElementById("userInput").value += clipText;
+            });
+        }
+    </script>
+</body>
+</html>

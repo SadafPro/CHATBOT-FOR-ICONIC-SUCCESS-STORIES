@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins" , sans-serif;
+}
+
+body{
+    background:white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+header{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding:30px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index:100;
+}
+.head img{
+    width: 70px;
+    height: 70px;
+    background: url(wall-e-waving.gif);
+    background-size: 100%;
+    border-radius: 80%;
+    margin-left:1px;
+}
+.logo{
+    font-size:2em;
+    color: #0ef;
+    pointer-events: none;
+    margin-right: 500px;
+    text-shadow: 0 0 15px #0ef;
+}
+.navigation a{
+    text-decoration: none;
+    color: #0ef;
+    padding: 6px 15px;
+    border-radius: 20px;
+    margin:0 10px;
+    font-weight: 600;
+    text-shadow: 0 0 10px #0ef;
+}
+
+.navigation a:hover,
+.navigation a.active{
+    background: #0ef;
+    color:white;
+}
+.parallex{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.parallex img{
+    z-index: 000;
+    position: absolute;
+    top:0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+}
+#text{
+    position: absolute;
+    font-size: 5em;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 0 15px rgb(0, 0, 0)
+    rgba(red, green, blue, alpha);
+}
+.sec{
+    position: relative;
+    display: flex;
+    background: #1F2833;
+    padding: 100px;
+    height: 100vh;
+}
+.sec h3{
+    position: relative;
+    font-size: 2em;
+    margin-top:-50px;
+    margin-left:-50px;
+    color:#0ef;
+    text-shadow: 0 0 10px #0ef;
+}
+.sec p{
+    position: absolute;
+    font-size: 1em;
+    text-shadow: 0 0 5px #0ef;
+    margin-left:-30px;
+   
+}
+.sec img{
+    z-index: 000;
+    position: absolute;
+    top:0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.parallex video{
+    z-index: index 100;
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.parallex ::before{
+    z-index: 777;
+    color: black;
+    position: absolute;
+    background: gray;
+    width:100%;
+    height:100%;
+    top:0;
+    right:0;
+}
+
+
+.slides-navigation{
+    z-index: 888;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(80px);
+    margin-bottom: 12px;
+}
+.slides-navigation .nav-btn{
+    width: 12px;
+    height:12px;
+    background: rgb(159, 136, 238);
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(red, green, blue, alpha);
+    transition: 0.3 ease;
+}
+.slides-navigation .nav-btn :nth-last-child{
+    margin-right:20px;
+}
+.slides-navigation .nav-btn :hover{
+    transform: scale(1.2);
+}
+.slides-navigation .nav-btn :active{
+    background: rgb(12, 12, 16);
+}
